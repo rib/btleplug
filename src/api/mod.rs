@@ -182,6 +182,20 @@ pub trait Peripheral: Send + Sync + Clone + Debug {
     /// Returns the MAC address of the peripheral.
     fn address(&self) -> BDAddr;
 
+    /// The type of address (either random or public)
+    fn address_type(&self) -> Option<AddressType>;
+
+    /// Returns the local name of the device. This is generally a human-readable string that
+    /// identifies the type of device. This may be a shortened or complete local name, as defined
+    /// by the Bluetooth LE specification.
+    fn local_name(&self) -> Option<String>;
+
+    // Returns the most recently advertised TX power level for this device (dBm)
+    fn last_tx_power_level(&self) -> Option<i8>;
+
+    /// Advertised services for this device
+    fn services(&self) -> Vec<Uuid>;
+
     /// Returns the set of properties associated with the peripheral. These may be updated over time
     /// as additional advertising reports are received.
     async fn properties(&self) -> Result<Option<PeripheralProperties>>;
